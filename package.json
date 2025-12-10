@@ -1,0 +1,17 @@
+{
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^24.0.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.8",
+    "cypress": "^15.7.1",
+    "esbuild": "^0.27.1",
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^5.1.0",
+    "mochawesome-report-generator": "^6.3.2"
+  },
+  "scripts": {
+    "test": "cypress run",
+    "report:merge": "mochawesome-merge cypress/reports/*.json > cypress/reports/report.json",
+    "report:html": "marge cypress/reports/report.json -o cypress/reports/html",
+    "report": "npm run report:merge && npm run report:html"
+  }
+}

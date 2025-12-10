@@ -1,0 +1,43 @@
+const { When, Then } = require('@badeball/cypress-cucumber-preprocessor');
+const { webTables } = require('../../support/pages/webTables');
+
+Then('I should not see a row containing email {string}', (email) => {
+  webTables.getTableRows().each(($row) => {
+    cy.wrap($row).should('not.contain.text', email);
+  });
+});
+
+Then('I should see at least {int} rows containing email {string}', (count, email) => {
+  let found = 0;
+  webTables.getTableRows().each(($row) => {
+    const hasEmail = $row.text().includes(email);
+    if (hasEmail) found++;
+  }).then(() => {
+    expect(found).to.be.at.least(count);
+  });
+});
+
+When('I edit the row with email {string} to First Name {string}, Last Name {string}, Age {string}, Salary {string} and Department {string}',
+  (email, firstName, lastName, age, salary, department) => {
+    webTables.findRowByEmail(email).then(($row) => {
+      webTables.getEditButtonInRow($row).click();
+    });
+    webTables.getFirstNameInput().clear().type(firstName);
+    webTables.getLastNameInput().clear().type(lastName);
+    webTables.getEmailInput().clear().type(email);
+    webTables.getAgeInput().clear().type(age);
+    webTables.getSalaryInput().clear().type(salary);
+    webTables.getDepartmentInput().clear().type(department);
+    webTables.getSubmitButton().click();
+});
+
+When('I delete the row with email {string}', (email) => {
+  webTables.findRowByEmail(email).then(($row) => {
+    webTables.getDeleteButtonInRow($row).click();
+  });
+});
+
+When('I close the modal without submitting', () => {
+  webTables.getCloseModalButton().should('be.visible').click();
+  webTables.getModal().should('not.exist');
+});
