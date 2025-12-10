@@ -52,10 +52,7 @@ When('I fill in the form with:', (dataTable) => {
   }
 
   const randomAddress = `Test Address ${Math.floor(Math.random() * 1000000)}`;
-  cy.get('#currentAddress')
-    .scrollIntoView({ block: 'center' })
-    .should('be.visible')
-    .then($el => {
+  cy.get('#currentAddress').scrollIntoView({ block: 'center' }).should('be.visible').then($el => {
       $el[0].focus();
       cy.wrap($el).clear().type(randomAddress);
     });
@@ -71,10 +68,7 @@ When('I fill in the form with:', (dataTable) => {
 });
 
 When('I submit the form', () => {
-  formPage.getSubmitButton()
-    .scrollIntoView({ block: 'center' })
-    .should('be.visible')
-    .click({ force: true });
+  formPage.getSubmitButton().should('be.visible').click;
   formPage.getSubmissionModal().should('be.visible');
 });
 
@@ -128,5 +122,6 @@ Then('I should see the submission modal containing {string} and {string} and {st
       });
     }
   });
-  formPage.getCloseModalButton().click();
+ 
+  formPage.getCloseModalButton().scrollIntoView({ block: 'center' }).click({ force: true });
 });

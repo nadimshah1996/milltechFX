@@ -1,5 +1,5 @@
 const formPage = {
-
+  // Elements
   getFormsCard: () => cy.get('.category-cards').contains('div.card', 'Forms'),
   getInputFirstName: () => cy.get('#firstName'),
   getInputLastName: () => cy.get('#lastName'),
@@ -12,14 +12,14 @@ const formPage = {
   getSubmitButton: () => cy.get('#submit'),
   getSubmissionModal: () => cy.get('.modal-content'),
   getCloseModalButton: () => cy.get('#closeLargeModal'),
-  getTabledata: () => cy.get('.table-responsive')
-  ,
+  getTabledata: () => cy.get('.table-responsive'),
 
+  // Actions
   selectRandomGender: () => {
     const idx = 1; // Male
     const mapping = { 1: 'Male', 2: 'Female', 3: 'Other' };
     const inputSel = `#gender-radio-${idx}`;
-   
+
     cy.get(inputSel).scrollIntoView().should('exist').check({ force: true }).should('be.checked');
     return cy.wrap(mapping[idx]);
   },
@@ -33,14 +33,12 @@ const formPage = {
     }
     const inputSel = `#gender-radio-${idx}`;
     const labels = { 1: 'Male', 2: 'Female', 3: 'Other' };
-    
+
     cy.get(inputSel).scrollIntoView().should('exist').check({ force: true }).should('be.checked');
     return cy.wrap(labels[idx]);
-  }
-  ,
-  
+  },
+
   addUniqueCurrentAddress: () => {
-    
     const randomAddress = `Test Address ${Math.floor(Math.random() * 1000000)}`;
     cy.get('#currentAddress')
       .scrollIntoView({ block: 'center' })
@@ -48,8 +46,8 @@ const formPage = {
       .clear()
       .type(randomAddress);
     return cy.wrap(randomAddress);
-  }
-  ,
+  },
+
   selectRandomHobby: () => {
     const idx = Math.floor(Math.random() * 3) + 1;
     const mapping = { 1: 'Sports', 2: 'Reading', 3: 'Music' };

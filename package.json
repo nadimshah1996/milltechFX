@@ -6,12 +6,15 @@
     "esbuild": "^0.27.1",
     "mochawesome": "^7.1.4",
     "mochawesome-merge": "^5.1.0",
-    "mochawesome-report-generator": "^6.3.2"
+    "mochawesome-report-generator": "^6.3.2",
+    "prettier": "^3.2.5"
   },
   "scripts": {
     "test": "cypress run",
     "report:merge": "mochawesome-merge cypress/reports/*.json > cypress/reports/report.json",
     "report:html": "marge cypress/reports/report.json -o cypress/reports/html",
-    "report": "npm run report:merge && npm run report:html"
+    "report": "npm run report:merge && npm run report:html",
+    "format": "prettier --write \"**/*.js\"",
+    "format:check": "prettier --check \"**/*.js\""
   }
 }
