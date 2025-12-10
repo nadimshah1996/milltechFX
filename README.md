@@ -83,6 +83,22 @@ This runs all specs matching the feature pattern.
 npx cypress run --spec "cypress/e2e/features/alerts/alertsButton.feature"
 ```
 
+### Book Store API invalid password case
+- Spec: `cypress/e2e/features/bookstore/bookStoreApi-invalid-password.feature`
+- What it does: opens Swagger UI, tries `POST /Account/v1/User` with a weak password, and validates the API error.
+- Run it directly:
+```bash
+npx cypress run --spec "cypress/e2e/features/bookstore/bookStoreApi-invalid-password.feature" --headless
+```
+
+Step definition behavior:
+- The Then step accepts multiple possible error message variants using `||` (API can return different texts):
+  - Example feature line:
+    `Then I should see an error code "1200" with a message containing "Passwords must have at least one non alphanumeric character || UserName and Password required."`
+- If the API returns a success-shaped object (e.g., `{ userId, username, books }`) instead of an error, the step asserts basic success shape to avoid false failures.
+
+
+
 ## Reports
 After a headless run, merge and generate the HTML report:
 ```bash

@@ -1,0 +1,17 @@
+{
+  "userId": "12345-abcde-67890-fghij",
+  "username": "shah96",
+  "books": [
+    {
+      "isbn": "9781449325862",
+      "title": "Learning JavaScript Design Patterns",
+      "subTitle": "A JavaScript and jQuery Developer's Guide",
+      "author": "Addy Osmani",
+      "publish_date": "2025-12-10T02:21:11.855Z",
+      "publisher": "O'Reilly Media",
+      "pages": 254,
+      "description": "A book that teaches reusable, maintainable design patterns in JavaScript.",
+      "website": "http://www.oreilly.com/books/9781449325862"
+    }
+  ]
+}
