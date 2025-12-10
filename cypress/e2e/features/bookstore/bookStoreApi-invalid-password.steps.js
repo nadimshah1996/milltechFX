@@ -1,7 +1,4 @@
-import { When, Then } from '@badeball/cypress-cucumber-preprocessor'
-import BookStoreApiPage from '../../../support/pages/bookStoreApi'
-
-const apiPage = new BookStoreApiPage()
+import { Then } from '@badeball/cypress-cucumber-preprocessor'
 
 Then('I should see an error code {string} with a message containing {string}', (code, messagePart) => {
   cy.get('@lastResponseText').then((text) => {
@@ -30,22 +27,3 @@ Then('I should see an error code {string} with a message containing {string}', (
     }
   })
 })
-
-When(
-  'I try out the {string} endpoint with username {string} and password {string}',
-  (endpointLabel, username, password) => {
-    apiPage.tryOutEndpoint(endpointLabel)
-    apiPage.fillCreateUserPayload(username, password)
-    apiPage.executeRequest()
-  }
-)
-
-// Handles feature step with an accidental trailing quote after password
-When(
-  'I try out the {string} endpoint with username {string} and password {string}"',
-  (endpointLabel, username, password) => {
-    apiPage.tryOutEndpoint(endpointLabel)
-    apiPage.fillCreateUserPayload(username, password)
-    apiPage.executeRequest()
-  }
-)

@@ -7,5 +7,5 @@ Feature: Book Store API - Invalid Password
 		Given I visit the DemoQA home page
 		When I open the Book Store Application
 		And I open the Book Store App API page
-		And I try out the "POST /Account/v1/User" endpoint with username "tryrth" and password "gfhfghf""
+		And I try out the "POST /Account/v1/User" endpoint with username "tryrth" and password "gfhfghf"
 		Then I should see an error code "1200" with a message containing "Passwords must have at least one non alphanumeric character || UserName and Password required."

@@ -20,9 +20,11 @@ Then('I should see at least {int} rows containing email {string}', (count, email
 When('I edit the row with email {string} to First Name {string}, Last Name {string}, Age {string}, Salary {string} and Department {string}',
   (email, firstName, lastName, age, salary, department) => {
     webTables.findRowByEmail(email).then(($row) => {
-      webTables.getEditButtonInRow($row).click();
+      webTables.getEditButtonInRow($row).scrollIntoView().click({ force: true });
     });
-    webTables.getFirstNameInput().clear().type(firstName);
+    // Ensure the edit modal is visible before typing to avoid CI flakiness (allow more time in CI)
+    webTables.getModal().should('be.visible');
+    webTables.getFirstNameInput().should('be.visible').clear().type(firstName);
     webTables.getLastNameInput().clear().type(lastName);
     webTables.getEmailInput().clear().type(email);
     webTables.getAgeInput().clear().type(age);
