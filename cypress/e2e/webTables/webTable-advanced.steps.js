@@ -22,7 +22,6 @@ When('I edit the row with email {string} to First Name {string}, Last Name {stri
     webTables.findRowByEmail(email).then(($row) => {
       webTables.getEditButtonInRow($row).scrollIntoView().click({ force: true });
     });
-    // Ensure the edit modal is visible before typing to avoid CI flakiness (allow more time in CI)
     webTables.getModal().should('be.visible');
     webTables.getFirstNameInput().should('be.visible').clear().type(firstName);
     webTables.getLastNameInput().clear().type(lastName);
