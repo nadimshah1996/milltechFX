@@ -18,6 +18,7 @@ cypress/videos/
 cypress/screenshots/
 # If using component testing builds
 cypress/.cache/
+cypress/downloads/
 
 # Test reports (exclude Mochawesome outputs from PRs)
 cypress/reports/

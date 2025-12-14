@@ -20,6 +20,9 @@ module.exports = defineConfig({
     baseUrl: 'https://demoqa.com',
     specPattern: 'cypress/e2e/**/*.feature',
     setupNodeEvents,
+    // Increase timeouts to accommodate slow external site loads in CI
+    pageLoadTimeout: 120000,
+    defaultCommandTimeout: 15000,
     env: {
       // Explicitly tell the cucumber preprocessor where to find step files
       stepDefinitions: [

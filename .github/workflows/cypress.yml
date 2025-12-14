@@ -31,6 +31,8 @@ jobs:
         env:
           # Base URL is set in cypress.config.js, but can be overridden:
           CYPRESS_baseUrl: https://demoqa.com
+          # Ensure higher page load timeout in CI
+          CYPRESS_pageLoadTimeout: 120000
 
       - name: Merge Mochawesome reports
         if: always()

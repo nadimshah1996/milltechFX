@@ -1,18 +1,15 @@
 # MilltechFX Cypress E2E Tests
 
-This repo contains end‑to‑end tests for DemoQA flows (alerts, web tables, login) using Cypress with Cucumber (Gherkin) step definitions and Mochawesome reporting.
+Friendly end‑to‑end tests for DemoQA using Cypress + Cucumber. The goal is simple: clone, install, run, and read the report without surprises.
 
-The goal: make it easy for anyone to install, run, and review test results without surprises.
+## What’s Inside
+- Cypress 15 with Gherkin feature files and step definitions.
+- Page Objects under `cypress/support/pages/**` to keep selectors tidy.
+- Mochawesome reports generated to `cypress/reports/` (JSON + pretty HTML).
 
-## What’s in here
-- Cypress 15 with Cucumber preprocessor.
-- Feature files under `cypress/e2e/**` and matching step definitions.
-- Page Objects under `cypress/support/pages/**`.
-- Mochawesome reports generated to `cypress/reports/`.
-
-## Prerequisites
+## Requirements
 - Node.js 18+ (recommended) and npm.
-- A Linux/macOS/WSL environment is fine. These scripts use bash.
+- Linux/macOS/WSL all work fine.
 
 Check your versions:
 ```bash
@@ -20,7 +17,7 @@ node -v
 npm -v
 ```
 
-## Install
+## Set Up
 From the project root:
 ```bash
 npm install
@@ -37,7 +34,7 @@ Installed dev dependencies (and target versions):
 
 If your npm resolves slightly different minor versions, that’s OK. If you want exact locks, add a lockfile or pin versions.
 
-## Project structure
+## Repo Tour
 ```
 cypress.config.js
 package.json
@@ -59,14 +56,14 @@ cypress/
       loginPage.js
 ```
 
-## Configuration highlights
+## Config Highlights
 - `baseUrl`: `https://demoqa.com`
 - Spec pattern points at `*.feature` files.
-- Cucumber preprocessor + esbuild bundler are wired in `setupNodeEvents`.
-- Reporter: `mochawesome` with JSON output to `cypress/reports`.
+- Cucumber preprocessor + esbuild bundler wired in `setupNodeEvents`.
+- Reporter: `mochawesome` outputs JSON to `cypress/reports`.
 
-## Running tests
-- Open Cypress GUI (interactive):
+## Run Tests
+- Open Cypress (interactive):
 ```bash
 npx cypress open
 ```
@@ -83,19 +80,18 @@ This runs all specs matching the feature pattern.
 npx cypress run --spec "cypress/e2e/features/alerts/alertsButton.feature"
 ```
 
-### Book Store API invalid password case
+### Book Store API: Invalid Password
 - Spec: `cypress/e2e/features/bookstore/bookStoreApi-invalid-password.feature`
-- What it does: opens Swagger UI, tries `POST /Account/v1/User` with a weak password, and validates the API error.
+- What it checks: opens Swagger UI, tries `POST /Account/v1/User` with a weak password, and validates the API error.
 - Run it directly:
 ```bash
 npx cypress run --spec "cypress/e2e/features/bookstore/bookStoreApi-invalid-password.feature" --headless
 ```
 
 Step definition behavior:
-- The Then step accepts multiple possible error message variants using `||` (API can return different texts):
-  - Example feature line:
-    `Then I should see an error code "1200" with a message containing "Passwords must have at least one non alphanumeric character || UserName and Password required."`
-- If the API returns a success-shaped object (e.g., `{ userId, username, books }`) instead of an error, the step asserts basic success shape to avoid false failures.
+- The Then step accepts multiple possible error message variants using `||` (API can return different texts). Example:
+  `Then I should see an error code "1200" with a message containing "Passwords must have at least one non alphanumeric character || UserName and Password required."`
+- If the API returns a success‑shaped object (e.g., `{ userId, username, books }`) instead of an error, we assert the basic success shape to avoid false failures.
 
 
 
@@ -113,32 +109,24 @@ On macOS:
 open cypress/reports/html/report.html
 ```
 
-## CI: GitHub Actions
-You can run these tests automatically on every push/PR using GitHub Actions.
+## CI (Optional)
+You can run these tests automatically on every push/PR with GitHub Actions.
 
 Workflow file: `.github/workflows/cypress.yml`
 - Uses Node 18 and runs Cypress headless in Chrome.
-- Merges Mochawesome JSON and publishes the HTML report as a build artifact.
+- Merges Mochawesome JSON and publishes the HTML report as an artifact.
 
-How it works:
-1. Push to `main` or open a PR.
-2. GitHub Actions will:
-  - `npm ci`
-  - run `cypress-io/github-action` with specs `cypress/e2e/**/*.feature`
-  - merge and generate `cypress/reports/html/report.html`
-  - upload the report so you can download from the job’s Artifacts section.
+Environment overrides: set `CYPRESS_baseUrl` in the workflow `env`.
 
-If you need to override `baseUrl` per environment, set `CYPRESS_baseUrl` in the workflow `env`.
-
-## Notes on selectors and pages
-- DemoQA’s login username field is `#userName` (camelCase), password is `#password`, and login button is `#login`.
-- Alerts use specific IDs like `#alertButton`, `#timerAlertButton`, `#confirmButton`, `#promtButton` (sic). The page objects capture these.
+## Tips & Gotchas
+- Login selectors: `#userName` (camelCase), `#password`, `#login`.
+- Alerts: `#alertButton`, `#timerAlertButton`, `#confirmButton`, `#promtButton` (typo on the site) are covered in page objects.
+- Noisy third‑party errors: ignored globally in `cypress/support/e2e.js` to keep runs clean.
 
 ## Troubleshooting
-- Duplicate step definitions: if Cucumber complains about “Multiple matching step definitions…”, use more specific wording per feature or consolidate common steps into one shared file.
-- Cross‑origin script errors: we ignore noisy third‑party exceptions globally in `cypress/support/e2e.js`.
-- Network or auth gates: if DemoQA changes flows, adapt the steps (e.g., stubbing `window.confirm`/`window.prompt` as already shown).
+- “Multiple matching step definitions…”: tighten wording or consolidate shared steps.
+- Network or auth changes on DemoQA: adapt steps or stub `window.confirm` / `window.prompt`.
 
-## Submitting/Reviewing
-- To validate locally: `npm install`, then `npm run test`, then `npm run report`.
-- Include the generated HTML report found at `cypress/reports/html/report.html` with your submission if needed.
+## Contribute / Review
+- Local check: `npm install` → `npm run test` → `npm run report`.
+- Share the HTML report (`cypress/reports/html/report.html`) when you need a quick review.

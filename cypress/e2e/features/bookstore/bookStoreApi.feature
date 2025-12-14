@@ -8,4 +8,4 @@ Feature: Book Store API - Create User via Swagger UI
 		When I open the Book Store Application
 		And I open the Book Store App API page
 		And I try out the "POST /Account/v1/User" endpoint with username "shah96" and password "Hello@246890"
-		Then I should see the API response contain userID "beba3a50-ce6a-4cb3-8b6d-27fb6e4e3d13", username "shah96" and empty books array
+		Then I should see the API response contain userId "beba3a50-ce6a-4cb3-8b6d-27fb6e4e3d13", username "shah96" and empty books array

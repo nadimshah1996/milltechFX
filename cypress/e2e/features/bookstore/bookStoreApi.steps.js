@@ -25,7 +25,7 @@ When(
 )
 
 Then(
-	'I should see the API response contain userID {string}, username {string} and empty books array',
+	'I should see the API response contain userId {string}, username {string} and empty books array',
 	(userId, username) => {
 		apiPage.verifyCreateUserResponse(userId, username)
 	}
