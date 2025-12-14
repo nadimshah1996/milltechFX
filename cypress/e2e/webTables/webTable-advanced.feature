@@ -6,7 +6,8 @@ Feature: Web Tables - Advanced Scenarios
   Scenario: Negative - submit with missing required fields
     When I click the Add button
     And I fill the modal form with First Name "NoEmail", Last Name "User", Email "", Age "30", Salary "50000" and Department "QA"
-    And I close the modal without submitting
+    And I submit the record form
+    And I close the modal window
 
   Scenario: Duplicate entry - allow same email twice
     When I click the Add button

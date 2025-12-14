@@ -2,9 +2,7 @@ const { When, Then } = require('@badeball/cypress-cucumber-preprocessor');
 const { webTables } = require('../../support/pages/webTables');
 
 Then('I should not see a row containing email {string}', (email) => {
-  webTables.getTableRows().each(($row) => {
-    cy.wrap($row).should('not.contain.text', email);
-  });
+  cy.get('.rt-table .rt-tbody .rt-tr-group').contains(email).should('not.exist');
 });
 
 Then('I should see at least {int} rows containing email {string}', (count, email) => {
@@ -39,6 +37,11 @@ When('I delete the row with email {string}', (email) => {
 });
 
 When('I close the modal without submitting', () => {
+  webTables.getCloseModalButton().should('be.visible').click();
+  webTables.getModal().should('not.exist');
+});
+
+When('I close the modal window', () => {
   webTables.getCloseModalButton().should('be.visible').click();
   webTables.getModal().should('not.exist');
 });
