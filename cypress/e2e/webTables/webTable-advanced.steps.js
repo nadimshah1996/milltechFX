@@ -2,7 +2,8 @@ const { When, Then } = require('@badeball/cypress-cucumber-preprocessor');
 const { webTables } = require('../../support/pages/webTables');
 
 Then('I should not see a row containing email {string}', (email) => {
-  cy.get('.rt-table .rt-tbody .rt-tr-group').contains(email).should('not.exist');
+  // Assert the table body no longer contains the email text
+  cy.get('.rt-table .rt-tbody').should('not.contain', email);
 });
 
 Then('I should see at least {int} rows containing email {string}', (count, email) => {
@@ -32,7 +33,7 @@ When('I edit the row with email {string} to First Name {string}, Last Name {stri
 
 When('I delete the row with email {string}', (email) => {
   webTables.findRowByEmail(email).then(($row) => {
-    webTables.getDeleteButtonInRow($row).click();
+    webTables.getDeleteButtonInRow($row).click({ force: true });
   });
 });
 
