@@ -25,6 +25,12 @@ When('I click the delayed alert button', () => {
 	alertsPage.clickOnbutton().click();
 });
 
+Then('I should see a delayed alert with message {string}', (expectedMessage) => {
+	cy.on('window:alert', (msg) => {
+		expect(msg).to.eq(expectedMessage);
+	});
+});
+
 
 When('I click the confirm button and choose {string}', (choice) => {
 	cy.window().then((win) => {
