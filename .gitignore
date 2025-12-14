@@ -19,6 +19,12 @@ cypress/screenshots/
 # If using component testing builds
 cypress/.cache/
 
+# Test reports (exclude Mochawesome outputs from PRs)
+cypress/reports/
+reports/
+mochawesome*.json
+mochawesome*.html
+
 # OS files
 .DS_Store
 Thumbs.db
